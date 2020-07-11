@@ -12,7 +12,6 @@ const App = () => {
 
   const context = useProductContext();
   const issueCreated = useState(async () => await fetchDateForIssue(context.platformContext.issueKey))[0];
-  var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
   const [json, setJson] = useState(
     async () => {
       var date = new Date(issueCreated);
