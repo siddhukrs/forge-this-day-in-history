@@ -12,32 +12,34 @@ const App = () => {
 
   const context = useProductContext();
   const issueCreated = useState(async () => await fetchDateForIssue(context.platformContext.issueKey))[0];
-  const [json, setJson] = useState(
+  const [events, setEvents] = useState(
     async () => {
       var date = new Date(issueCreated);
       var url = "http://history.muffinlabs.com/date/" + (Number(date.getMonth())+1).toString() + "/" + date.getDate();
       var res = await api.fetch(url);
-      return res.json();
+      var json = await res.json()
+      var events = json.data.Events;
+      return events;
     },
-    {data:{Events:[]}}
+    []
   );
   
   return (
-      <EventList dateTime={issueCreated} data={json} length={json.data.Events.length}/>
+      <EventList dateTime={issueCreated} events={events} length={events.length}/>
   );
 };
 
-const EventList = ({dateTime, date, month, data, length}) => (
-  data.data.Events.length > 0 ?
+const EventList = ({dateTime, events, length}) => (
+  events.length > 0 ?
   (
     <Fragment>
         <Text>__{new Date(dateTime).toDateString()}__</Text>
         <Text>__[{new Date(dateTime).getFullYear()}](#)__: This issue was filed.</Text>
-        <Text>__[{data["data"]["Events"][length-1].year}]({data["data"]["Events"][length-1]["links"][0]["link"]})__: {data["data"]["Events"][length-1].text}</Text>
-        <Text>__[{data["data"]["Events"][length-2].year}]({data["data"]["Events"][length-2]["links"][0]["link"]})__: {data["data"]["Events"][length-2].text}</Text>
-        <Text>__[{data["data"]["Events"][length-3].year}]({data["data"]["Events"][length-3]["links"][0]["link"]})__: {data["data"]["Events"][length-3].text}</Text>
-        <Text>__[{data["data"]["Events"][length-4].year}]({data["data"]["Events"][length-4]["links"][0]["link"]})__: {data["data"]["Events"][length-4].text}</Text>
-        <Text>__[{data["data"]["Events"][length-5].year}]({data["data"]["Events"][length-5]["links"][0]["link"]})__: {data["data"]["Events"][length-5].text}</Text>
+        <Text>__[{events[length-1].year}]({events[length-1]["links"][0]["link"]})__: {events[length-1].text}</Text>
+        <Text>__[{events[length-2].year}]({events[length-2]["links"][0]["link"]})__: {events[length-2].text}</Text>
+        <Text>__[{events[length-3].year}]({events[length-3]["links"][0]["link"]})__: {events[length-3].text}</Text>
+        <Text>__[{events[length-4].year}]({events[length-4]["links"][0]["link"]})__: {events[length-4].text}</Text>
+        <Text>__[{events[length-5].year}]({events[length-5]["links"][0]["link"]})__: {events[length-5].text}</Text>
         <Text>   </Text>
         <Text>_This page uses material from Wikipedia, which is released under the [Creative Commons Attribution-Share-Alike License 3.0](https://creativecommons.org/licenses/by-sa/3.0/)._</Text>
     </Fragment>
