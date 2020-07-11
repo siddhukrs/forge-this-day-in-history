@@ -3,7 +3,9 @@ modules:
     - key: forge-history-glance
       function: main
       title: This issue is old!
-      description: Forge app that displays historic events that happened the day an issue was filed.
+      description: >-
+        Forge app that displays historic events that happened the day an issue
+        was filed.
       label: Historic events from the date this issue was filed
   function:
     - key: main
@@ -11,3 +13,6 @@ modules:
 app:
   id: 'ari:cloud:ecosystem::app/c53d32ed-0238-4333-a5f9-8938699e82a8'
   name: forge-this-day-in-history
+permissions:
+  scopes:
+    - 'read:jira-work'
