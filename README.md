@@ -1,6 +1,6 @@
-# Forge Hello World
+# This day in history
 
-This project contains a Forge app written in Javascript that displays `Hello World!` in a Jira issue glance. 
+This project contains a Forge app written in Javascript that displays historic events that occurred on the date an issue was filed.
 
 See [developer.atlassian.com/platform/forge/](https://developer.atlassian.com/platform/forge) for documentation and tutorials explaining Forge.
 
@@ -10,19 +10,22 @@ See [Set up Forge](https://developer.atlassian.com/platform/forge/set-up-forge/)
 
 ## Quick start
 
-- Modify your app by editing the `src/index.jsx` file.
+- Clone this repository and install the node application by running:
+```
+npm install
+```
 
-- Build and deploy your app by running:
+- Build and deploy the app by running:
 ```
 forge deploy
 ```
 
-- Install your app in an Atlassian site by running:
+- Install the app in an Atlassian site by running:
 ```
 forge install
 ```
 
-- Develop your app by running `forge tunnel` to proxy invocations locally:
+- Modify and develop the app by running `forge tunnel` to proxy invocations locally:
 ```
 forge tunnel
 ```
@@ -34,4 +37,4 @@ forge tunnel
 
 ## Support
 
-See [Get help](https://developer.atlassian.com/platform/forge/get-help/) for how to get help and provide feedback.
+See [Get help](https://developer.atlassian.com/platform/forge/get-help/) for how to get help.
