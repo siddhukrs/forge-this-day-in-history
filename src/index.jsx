@@ -48,7 +48,7 @@ const EventList = ({dateTime, events, length}) => (
         {events.map(event => (
             <Text>__[{event.year}]({event.link})__: {event.text}</Text>
         ))}
-        <Text> __[{new Date().getFullYear()}](#)__: This issue is still open.  </Text>
+        <Text> __[{new Date().getFullYear()}](#)__: This issue is still open! </Text>
         <Text>_This page uses material from Wikipedia, which is released under the [Creative Commons Attribution-Share-Alike License 3.0](https://creativecommons.org/licenses/by-sa/3.0/)._</Text>
     </Fragment>
   )
