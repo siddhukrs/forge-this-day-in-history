@@ -2,11 +2,10 @@ modules:
   'jira:issueGlance':
     - key: forge-history-glance
       function: main
-      title: This issue is old!
+      title: This Issue is Ancient!
       description: >-
-        Forge app that displays historic events that happened the day an issue
-        was filed.
-      label: Historic events from the date this issue was filed
+        Forge app that displays a timeline of historic events that have occurred since this issue was filed.
+      label: Here's what the world has been through since its filing
   function:
     - key: main
       handler: index.run

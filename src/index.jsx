@@ -14,38 +14,48 @@ const App = () => {
   const issueCreated = useState(async () => await fetchDateForIssue(context.platformContext.issueKey))[0];
   const [events, setEvents] = useState(
     async () => {
-      var date = new Date(issueCreated);
-      var url = "http://history.muffinlabs.com/date/" + (Number(date.getMonth())+1).toString() + "/" + date.getDate();
-      var res = await api.fetch(url);
-      var json = await res.json()
-      var events = json.data.Events;
-      return events;
+      var dateTime = new Date(issueCreated);
+      var month = (Number(dateTime.getMonth())+1).toString();
+      var date = Number(dateTime.getDate());
+      var allEvents = [];
+      allEvents = allEvents.concat((await (await api.fetch("http://history.muffinlabs.com/date/" + month + "/" + date)).json()).data.Events);
+      allEvents = allEvents.concat((await (await api.fetch("http://history.muffinlabs.com/date/" + month + "/" + (date+1)%28)).json()).data.Events);
+      allEvents = allEvents.concat((await (await api.fetch("http://history.muffinlabs.com/date/" + month + "/" + (date+2)%28)).json()).data.Events);
+      allEvents = allEvents.concat((await (await api.fetch("http://history.muffinlabs.com/date/" + month + "/" + (date-1)%28)).json()).data.Events);
+      allEvents = allEvents.concat((await (await api.fetch("http://history.muffinlabs.com/date/" + month + "/" + (date-2)%28)).json()).data.Events);
+
+      var subset = [];
+      allEvents.forEach(event => {
+        if (Number(event.year) >= Number(new Date(issueCreated).getFullYear())) {
+          subset.push({year: Number(event.year), text: event.text, link: event["links"][0]["link"]});
+        }
+      });;
+      return subset;
     },
     []
   );
-  
   return (
-      <EventList dateTime={issueCreated} events={events} length={events.length}/>
+      <EventList dateTime={issueCreated} events={events.sort(function(a,b){return a.year-b.year})} length={events.length}/>
   );
 };
 
 const EventList = ({dateTime, events, length}) => (
-  events.length > 0 ?
+  length > 0 ?
   (
     <Fragment>
         <Text>__{new Date(dateTime).toDateString()}__</Text>
         <Text>__[{new Date(dateTime).getFullYear()}](#)__: This issue was filed.</Text>
-        <Text>__[{events[length-1].year}]({events[length-1]["links"][0]["link"]})__: {events[length-1].text}</Text>
-        <Text>__[{events[length-2].year}]({events[length-2]["links"][0]["link"]})__: {events[length-2].text}</Text>
-        <Text>__[{events[length-3].year}]({events[length-3]["links"][0]["link"]})__: {events[length-3].text}</Text>
-        <Text>__[{events[length-4].year}]({events[length-4]["links"][0]["link"]})__: {events[length-4].text}</Text>
-        <Text>__[{events[length-5].year}]({events[length-5]["links"][0]["link"]})__: {events[length-5].text}</Text>
-        <Text>   </Text>
+        {events.map(event => (
+            <Text>__[{event.year}]({event.link})__: {event.text}</Text>
+        ))}
+        <Text> __[{new Date().getFullYear()}](#)__: This issue is still open.  </Text>
         <Text>_This page uses material from Wikipedia, which is released under the [Creative Commons Attribution-Share-Alike License 3.0](https://creativecommons.org/licenses/by-sa/3.0/)._</Text>
     </Fragment>
   )
   :
-  (<Fragment></Fragment>)
+  (<Fragment>
+    <Text>This issue was filed fairly recently. Please check back in a few months for your dose of trivia :)</Text>
+  </Fragment>)
 );
 
 export const run = render(

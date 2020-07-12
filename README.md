@@ -1,6 +1,6 @@
-# This day in history
+# This Issue is Ancient!
 
-This project contains a Forge app written in Javascript that displays historic events that occurred on the date an issue was filed.
+This project contains a Forge app written in Javascript that displays a timeline of what the world has been through since an issue was filed.
 
 See [developer.atlassian.com/platform/forge/](https://developer.atlassian.com/platform/forge) for documentation and tutorials explaining Forge.
 
